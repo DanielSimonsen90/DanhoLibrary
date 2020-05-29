@@ -1,0 +1,8 @@
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.deps.json
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.dll
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.pdb
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.csprojAssemblyReference.cache
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.AssemblyInfoInputs.cache
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.AssemblyInfo.cs
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.dll
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.pdb
