@@ -14,9 +14,21 @@
         public static string ToString<T>(bool IncludeComma, params T[] arr)
         {
             string result = string.Empty;
-            if (!IncludeComma) foreach (object item in arr) result += item.ToString();
-            else foreach (object item in arr) result += item.ToString() + ", ";
-            return result;
+            if (!IncludeComma)
+            {
+                foreach (object item in arr)
+                    result += item.ToString();
+                return result;
+            }
+
+            foreach (object item in arr)
+                result += item.ToString() + ", ";
+            result = result.Substring(0, result.Length - 2); //removes last comma from string 
+
+            for (int x = result.Length - 1; x >= 0; x--)
+                if (result[x] == ',')
+                    return result.Substring(0, x) + " &" + result.Substring(x + 1, result.Length - x - 1);
+            return arr.ToString();
         }
     }
 }

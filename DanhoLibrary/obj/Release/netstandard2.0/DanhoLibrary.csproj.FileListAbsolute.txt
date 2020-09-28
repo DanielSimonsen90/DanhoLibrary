@@ -5,3 +5,4 @@ C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netst
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.AssemblyInfo.cs
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.dll
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.pdb
+C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.csprojAssemblyReference.cache
