@@ -6,3 +6,12 @@ C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netst
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.dll
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.pdb
 C:\Users\DanielSimonsen\source\repos\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.csprojAssemblyReference.cache
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.AssemblyInfoInputs.cache
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.AssemblyInfo.cs
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.dll
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.pdb
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.deps.json
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.dll
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.pdb
+C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.csprojAssemblyReference.cache

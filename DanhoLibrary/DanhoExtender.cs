@@ -105,10 +105,11 @@ namespace DanhoLibrary
         /// Returns each element in <paramref name="arr"/> to a string value
         /// </summary>
         /// <param name="arr">Caller</param>
-        /// <param name="IncludeComma">Wether to include comma in the string or not</param>
+        /// <param name="seperator">The seperator string between each element in <paramref name="arr"/></param>
         /// <returns></returns>
-        public static string ToBigBoiString<T>(this T[] arr, bool IncludeComma) => ConsoleItems.ToString(IncludeComma, arr);
-        public static string ToBigBoiString<T>(this List<T> list, bool IncludeComma) => list.ToArray().ToBigBoiString(IncludeComma);
+        public static string Join<T>(this T[] arr, string seperator) => ConsoleItems.ToString(seperator, arr);
+        public static string Join<T>(this List<T> list, string seperator) => list.ToArray().Join(seperator);
+        public static string Join<T>(this List<T> list) => ConsoleItems.ToString(list.ToArray());
         #endregion
 
         #endregion
