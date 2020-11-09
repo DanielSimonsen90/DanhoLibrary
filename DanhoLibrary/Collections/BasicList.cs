@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DanhoLibrary.Collections
 {
-    class BasicList<T> : ICollection<T>, IList<T>
+    public class BasicList<T> : ICollection<T>, IList<T>
     {
         public T this[int index] { get => innerList[index]; set => innerList[index] = value; }
         public virtual T this[string item]
