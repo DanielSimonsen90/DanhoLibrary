@@ -13,7 +13,7 @@ namespace DanhoLibrary.Collections
             get => innerList.Find(i => i.ToString() == item);
             set => innerList[innerList.IndexOf(innerList.Find(i => i.ToString() == item))] = value;
         }
-        private readonly List<T> innerList = new List<T>();
+        protected readonly List<T> innerList = new List<T>();
 
         #region Interfaces
 

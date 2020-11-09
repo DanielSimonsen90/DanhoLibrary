@@ -14,4 +14,3 @@ C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\
 C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.deps.json
 C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.dll
 C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.0\DanhoLibrary.pdb
-C:\Users\Daniel Simonsen\Documents\GitHub\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.0\DanhoLibrary.csprojAssemblyReference.cache
