@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,17 +13,23 @@ namespace DanhoLibrary
         #region Construction
 
         #region OptionType
-        /// <summary> What is prioritized in terms of time or space </summary>
+        /// <summary> 
+        /// What is prioritized in terms of time or space 
+        /// </summary>
         public int OptionType { get => optionType; set => optionType = value; }
         private static int optionType;
         #endregion
 
         #region Capacity
-        /// <summary> Capacity list can have </summary>
+        /// <summary> 
+        /// Capacity list can have 
+        /// </summary>
         public int Capacity { get => InternCapacity; }
         private static int ValueOfInternCapacity;
 
-        /// <summary> The 100% incase of <see cref="optionType"/> = 3 </summary>
+        /// <summary> 
+        /// The 100% incase of <see cref="optionType"/> = 3 
+        /// </summary>
         private static int Whole = 50;
         private static int InternCapacity { get => GetCapacity(ref ValueOfInternCapacity); }
         private static int GetCapacity(ref int ValueOfInternCapacity)
@@ -38,10 +43,14 @@ namespace DanhoLibrary
         #endregion
 
         #region NewArray()
-        /// <summary> Main array </summary>
+        /// <summary> 
+        /// Main array 
+        /// </summary>
         private static T[] List = NewArray(false);
 
-        /// <summary> New Array </summary>
+        /// <summary> 
+        /// New Array 
+        /// </summary>
         /// <param name="ContainsItems"></param>
         /// <returns>true if same items, else no items</returns>
         private static T[] NewArray(bool ContainsItems)
@@ -56,7 +65,9 @@ namespace DanhoLibrary
             return TempArr;
         }
         
-        /// <summary> New array not including RemovedItem </summary>
+        /// <summary> 
+        /// New array not including RemovedItem 
+        /// </summary>
         /// <param name="RemovedItem">Item not to include in new array</param>
         /// <returns>New array without RemovedItem</returns>
         private T[] NewArray(T RemovedItem)
@@ -69,17 +80,23 @@ namespace DanhoLibrary
         }
         #endregion
 
-        /// <summary> Get an item from index </summary>
+        /// <summary> 
+        /// Get an item from index 
+        /// </summary>
         /// <param name="index">Index of item</param>
         /// <returns>Item</returns>
         public T this[int index] { get => List[index]; set => List[index] = value; }
 
-        /// <summary> Resets list to completely empty with default capacity </summary>
+        /// <summary> 
+        /// Resets list to completely empty with default capacity 
+        /// </summary>
         public void Reset() => List = new T[InternCapacity];
         #endregion
 
         #region Constructer with body
-        /// <summary> Very cool list from DanhoLibrary </summary>
+        /// <summary> 
+        /// Very cool list from DanhoLibrary 
+        /// </summary>
         /// <param name="optionType">1: Space > time | 2: Space + 10  | 3: Time > Space</param>
         public MyList(int optionType) => OptionType = optionType;
         public MyList(int optionType, IEnumerable<T> collection) : this(optionType)
@@ -91,7 +108,9 @@ namespace DanhoLibrary
         #endregion
 
         #region Add/Remove
-        /// <summary> Adds specified item to list </summary>
+        /// <summary> 
+        /// Adds specified item to list 
+        /// </summary>
         /// <param name="item">Item to add</param>
         public void Add(T item)
         {
@@ -112,7 +131,9 @@ namespace DanhoLibrary
             }
             catch (Exception err) { ConsoleItems.Error(err); }
         }
-        /// <summary> Removes specified item </summary>
+        /// <summary> 
+        /// Removes specified item 
+        /// </summary>
         /// <param name="item">Item to remove</param>
         public void Remove(T item)
         {
@@ -129,23 +150,31 @@ namespace DanhoLibrary
         #endregion
 
         #region Next/Previous
-        /// <summary> Item to remember using .Next() and .Previous() </summary>
+        /// <summary> 
+        /// Item to remember using .Next() and .Previous() 
+        /// </summary>
         public T ImportantItem { get; set; }
-        /// <summary> Get the next item of ImportantItem </summary>
+        /// <summary> 
+        /// Get the next item of ImportantItem 
+        /// </summary>
         /// <returns>The next item from ImportantItem's position</returns>
         public T Next()
         {
             try { return PositionHelper(List[0], true); }
             catch (ArgumentOutOfRangeException) { throw new Exception("You cannot call index +1!"); }
         }
-        /// <summary> Get the previous item of ImportantItem </summary>
+        /// <summary> 
+        /// Get the previous item of ImportantItem 
+        /// </summary>
         /// <returns>The previous item from ImportantItem's position</returns>
         public T Previous()
         {
             try { return PositionHelper(List[CountItems()], false); }
             catch (ArgumentOutOfRangeException) { throw new Exception("You cannot call index -1!"); }
         }
-        /// <summary> Main code used for Next() and Previous() </summary>
+        /// <summary> 
+        /// Main code used for Next() and Previous() 
+        /// </summary>
         /// <param name="StartItem">Definition of <see cref="ImportantItem"/> if not defined</param>
         /// <param name="IsPositive">Determines if Index++ or Index--</param>
         private T PositionHelper(T StartItem, bool IsPositive)
@@ -159,11 +188,17 @@ namespace DanhoLibrary
         #endregion
 
         #region ToArray(), Sort(), Count(), IndexOf(), Contains()
-        /// <summary> Returns List in Array </summary>
+        /// <summary> 
+        /// Returns List in Array 
+        /// </summary>
         public T[] ToArray() => List;
-        /// <summary> Amount of items in list </summary>
+        /// <summary> 
+        /// Amount of items in list 
+        /// </summary>
         public int Count { get => CountItems(); }
-        /// <summary> Value of .Count </summary>
+        /// <summary> 
+        /// Value of .Count 
+        /// </summary>
         /// <returns>Count of items inside <see cref="List"/></returns>
         private static int CountItems()
         {
@@ -172,7 +207,9 @@ namespace DanhoLibrary
                     return x;
             return ValueOfInternCapacity;
         }
-        /// <summary> Finds the Index of Item and returns Index </summary>
+        /// <summary> 
+        /// Finds the Index of Item and returns Index 
+        /// </summary>
         /// <param name="item">Item to look for</param>
         /// <returns>Index of specified Item</returns>
         public int IndexOf(T item)
@@ -184,7 +221,9 @@ namespace DanhoLibrary
         }
 
         #region Contains
-        /// <summary> Returns true if list has item stored, else returns false </summary>
+        /// <summary> 
+        /// Returns true if list has item stored, else returns false 
+        /// </summary>
         /// <param name="item"></param>
         /// <returns>true if item is contained, else false</returns>
         public bool Contains(T item)
@@ -194,7 +233,9 @@ namespace DanhoLibrary
                     return true;
             return false;
         }
-        /// <summary> Same as Contains(T item), except it outs the Index of the item it looked for </summary>
+        /// <summary> 
+        /// Same as Contains(T item), except it outs the Index of the item it looked for 
+        /// </summary>
         /// <param name="item">Item to look for</param>
         /// <param name="Index">Index item is placed in</param>
         private bool Contains(T item, out int Index)
