@@ -19,15 +19,24 @@ namespace DanhoLibrary
                 if (item) return true;
             return false;
         }
+        /// <summary>
+        /// If list contains a true element, it retuns true else false
+        /// </summary>
+        public static bool AnyTrue(this List<bool> list) => list.ToArray().AnyTrue();
+
         /// <summary> If all indexes specified are true, returns true else false </summary>
-        /// <param name="Indexes">Indexes expected to be true</param>
-        public static bool True(this bool[] arr, params int[] Indexes)
+        /// <param name="indexes">Indexes expected to be true</param>
+        public static bool AllTrue(this bool[] arr, params int[] indexes)
         {
-            for (int x = 0; x < Indexes.Length; x++)
-                if (!arr[Indexes[x]]) 
+            for (int x = 0; x < indexes.Length; x++)
+                if (!arr[indexes[x]]) 
                     return false;
             return true;
         }
+        /// <summary>
+        /// If all indexes specified are true, returns true else false
+        /// </summary>
+        public static bool AllTrue(this List<bool> list, params int[] indexes) => list.ToArray().AllTrue(indexes);
         #endregion
 
         #region T[]
@@ -38,14 +47,15 @@ namespace DanhoLibrary
         /// <returns>true if all of <paramref name="collection"/> is in this else false</returns>
         public static bool ContainsAll<T>(this T[] arr, params T[] collection)
         {
-            
-
             for (int x = 0; x < collection.Length; x++)
                 if (!arr.Contains(collection[x]))
                     return false;
             return true;
         }
-        public static bool ContainsAll<T>(this List<T> List, params T[] collection) => List.ToArray().ContainsAll(collection);
+        /// <summary>
+        /// Tests if <paramref name="list"/> contains all of <paramref name="collection"/>'s values
+        /// </summary>
+        public static bool ContainsAll<T>(this List<T> list, params T[] collection) => list.ToArray().ContainsAll(collection);
 
         /// <summary> Goes through <paramref name="collection"/> and checks if <paramref name="arr"/>.Contains(collectionItem) </summary>
         /// <typeparam name="T">Type</typeparam>
@@ -59,6 +69,9 @@ namespace DanhoLibrary
                     return true;
             return false;
         }
+        /// <summary>
+        /// Goes through collection and checks if <paramref name="List"/> contains any of <paramref name="collection"/>'s 
+        /// </summary>
         public static bool ContainsAny<T>(this List<T> List, params T[] collection) => List.ToArray().ContainsAny(collection);
 
         /// <summary> 
@@ -71,6 +84,9 @@ namespace DanhoLibrary
                     return false;
             return true;
         }
+        /// <summary>
+        /// If all items in <paramref name="List"/> are null, returns true else false
+        /// </summary>
         public static bool AllNull<T>(this List<T> List) => List.ToArray().AllNull();
         #endregion
 
@@ -79,8 +95,14 @@ namespace DanhoLibrary
         /// Returns a random item from <paramref name="arr"/>
         /// </summary>
         public static T GetRandomItem<T>(this T[] arr) => arr[ConsoleItems.RandomNumber(arr.Length)];
+        /// <summary>
+        /// Returns a random item from <paramref name="List"/>
+        /// </summary>
         public static T GetRandomItem<T>(this List<T> List) => List.ToArray().GetRandomItem();
 
+        /// <summary>
+        /// Cuts the first element of <paramref name="arr"/> and returns it
+        /// </summary>
         public static T Shift<T>(this T[] arr) => arr.ToList().Shift();
         /// <summary>
         /// Returns first element of <paramref name="List"/> and removes it from the collection
@@ -108,10 +130,58 @@ namespace DanhoLibrary
         /// <param name="seperator">The seperator string between each element in <paramref name="arr"/></param>
         /// <returns></returns>
         public static string Join<T>(this T[] arr, string seperator) => ConsoleItems.ToString(seperator, arr);
+        /// <summary>
+        /// Returns each element in <paramref name="list"/> to string value, seperated by <paramref name="seperator"/>
+        /// </summary>
         public static string Join<T>(this List<T> list, string seperator) => list.ToArray().Join(seperator);
+        /// <summary>
+        /// Converets all elements from <paramref name="list"/> to one long string
+        /// </summary>
         public static string Join<T>(this List<T> list) => ConsoleItems.ToString(list.ToArray());
         #endregion
 
+        /// <summary>
+        /// Goes through <paramref name="arr"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="B"/> array
+        /// </summary>
+        /// <typeparam name="A">Start type</typeparam>
+        /// <typeparam name="B">End type</typeparam>
+        /// <param name="arr">Start array</param>
+        /// <param name="callback">Function that should return <typeparamref name="B"/> array</param>
+        /// <returns><paramref name="arr"/> as <typeparamref name="B"/> array</returns>
+        public static B[] Map<A, B>(this A[] arr, Func<A, B> callback)
+        {
+            B[] newArr = new B[arr.Length];
+
+            for (int i = 0; i < arr.Length; i++)
+                newArr[i] = callback(arr[i]);
+            return newArr;
+        }
+        /// <summary>
+        /// Goes through <paramref name="list"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="B"/> List
+        /// </summary>
+        /// <typeparam name="A">Start type</typeparam>
+        /// <typeparam name="B">End type</typeparam>
+        /// <param name="list">Start list</param>
+        /// <param name="callback">Function that should return <typeparamref name="B"/></param>
+        /// <returns><paramref name="list"/> as <typeparamref name="B"/> List</returns>
+        public static List<B> Map<A, B>(this List<A> list, Func<A, B> callback) => list.ToArray().Map(callback).ToList();
+        
+        /// <summary>
+        /// For each loop as method
+        /// </summary>
+        /// <param name="arr">Array to loop through</param>
+        /// <param name="function">Method that each element goes through</param>
+        public static void ForEach<T>(this T[] arr, Action<T> function)
+        {
+            foreach (T item in arr)
+                function(item);
+        }
+        /// <summary>
+        /// For each loop as method
+        /// </summary>
+        /// <param name="list">List to loop through</param>
+        /// <param name="function">Method that each element goes through</param>
+        public static void ForEach<T>(this List<T> list, Action<T> function) => list.ToArray().ForEach(function);
         #endregion
 
         #region string

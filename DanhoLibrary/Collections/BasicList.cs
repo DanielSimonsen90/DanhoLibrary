@@ -39,7 +39,7 @@ namespace DanhoLibrary.Collections
         #endregion
 
         #region Misc methods
-        public T[] ToArray() => innerList.ToArray();
+        public T[] ToArray() => innerList.Map(item => item).ToArray();
         public List<T> ToList() => (from item in innerList select item).ToList();
         public BasicList<T> AddRange(params T[] arr)
         {
