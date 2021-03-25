@@ -20,7 +20,7 @@
 
             if (seperator != "list") return result;
 
-            result = result.Substring(0, result.Length - 2); //removes last comma from string 
+            result = result[0..^2]; //removes last comma from string 
 
             for (int x = result.Length - 1; x >= 0; x--)
                 if (result[x] == ',')

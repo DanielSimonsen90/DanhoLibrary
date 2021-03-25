@@ -14,12 +14,8 @@ namespace DanhoLibrary
         {
             int space = Console.WindowWidth - title.Length - 1;
             StringBuilder dash = new StringBuilder();
-
-            for (int x = 0; x < space; x++)
-                dash.Append("-");
-            Console.WriteLine(dash);
-            Console.WriteLine(title.PadLeft(space / 2));
-            Console.WriteLine(dash);
+            for (int x = 0; x < space; x++) dash.Append("-");
+            Console.WriteLine($"{dash}\n{title.PadLeft(space / 2)}\n{dash}");
 
             Break(2);
         }
