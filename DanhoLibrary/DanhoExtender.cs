@@ -9,108 +9,80 @@ namespace DanhoLibrary
     /// </summary>
     public static class DanhoExtender
     {
-        #region bool[]
+        #region IList<bool>
         /// <summary> 
         /// If array contains a true element, it returns true else false 
         /// </summary>
-        public static bool AnyTrue(this bool[] arr)
+        public static bool AnyTrue(this IList<bool> collection)
         {
-            foreach (bool item in arr)
+            foreach (bool item in collection)
                 if (item) return true;
             return false;
         }
-        /// <summary>
-        /// If list contains a true element, it retuns true else false
-        /// </summary>
-        public static bool AnyTrue(this List<bool> list) => list.ToArray().AnyTrue();
 
         /// <summary> If all indexes specified are true, returns true else false </summary>
         /// <param name="indexes">Indexes expected to be true</param>
-        public static bool AllTrue(this bool[] arr, params int[] indexes)
+        public static bool AllTrue(this IList<bool> collection, params int[] indexes)
         {
             for (int x = 0; x < indexes.Length; x++)
-                if (!arr[indexes[x]]) 
+                if (!collection[indexes[x]]) 
                     return false;
             return true;
         }
-        /// <summary>
-        /// If all indexes specified are true, returns true else false
-        /// </summary>
-        public static bool AllTrue(this List<bool> list, params int[] indexes) => list.ToArray().AllTrue(indexes);
         #endregion
 
-        #region T[]
+        #region IList<T>
 
         #region Returns bool
         /// <summary> Tests if this contains all of collection's values </summary>
         /// <param name="collection">collection of strings to test for</param>
         /// <returns>true if all of <paramref name="collection"/> is in this else false</returns>
-        public static bool ContainsAll<T>(this T[] arr, params T[] collection)
+        public static bool ContainsAll<T>(this IList<T> arr, params T[] collection)
         {
             for (int x = 0; x < collection.Length; x++)
                 if (!arr.Contains(collection[x]))
                     return false;
             return true;
         }
-        /// <summary>
-        /// Tests if <paramref name="list"/> contains all of <paramref name="collection"/>'s values
-        /// </summary>
-        public static bool ContainsAll<T>(this List<T> list, params T[] collection) => list.ToArray().ContainsAll(collection);
 
         /// <summary> Goes through <paramref name="collection"/> and checks if <paramref name="arr"/>.Contains(collectionItem) </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="arr">Original array</param>
         /// <param name="collection">External collection</param>
         /// <returns>True if <paramref name="collection"/> has items in <paramref name="arr"/> else false</returns>
-        public static bool ContainsAny<T>(this T[] arr, params T[] collection)
+        public static bool ContainsAny<T>(this IList<T> arr, params T[] collection)
         {
             for (int x = 0; x < collection.Length; x++)
                 if (arr.Contains(collection[x]))
                     return true;
             return false;
         }
-        /// <summary>
-        /// Goes through collection and checks if <paramref name="List"/> contains any of <paramref name="collection"/>'s 
-        /// </summary>
-        public static bool ContainsAny<T>(this List<T> List, params T[] collection) => List.ToArray().ContainsAny(collection);
 
         /// <summary> 
         /// If all items in array are null, true else false 
         /// </summary>
-        public static bool AllNull<T>(this T[] arr)
+        public static bool AllNull<T>(this IList<T> arr)
         {
             foreach (var item in arr)
                 if (item != null)
                     return false;
             return true;
         }
-        /// <summary>
-        /// If all items in <paramref name="List"/> are null, returns true else false
-        /// </summary>
-        public static bool AllNull<T>(this List<T> List) => List.ToArray().AllNull();
         #endregion
 
         #region Returns T
         /// <summary>
-        /// Returns a random item from <paramref name="arr"/>
+        /// Returns a random item from <paramref name="collection"/>
         /// </summary>
-        public static T GetRandomItem<T>(this T[] arr) => arr[ConsoleItems.RandomNumber(arr.Length)];
-        /// <summary>
-        /// Returns a random item from <paramref name="List"/>
-        /// </summary>
-        public static T GetRandomItem<T>(this List<T> List) => List.ToArray().GetRandomItem();
+        public static T GetRandomItem<T>(this IList<T> collection) => collection[ConsoleItems.RandomNumber(collection.Count)];
 
         /// <summary>
-        /// Cuts the first element of <paramref name="arr"/> and returns it
+        /// Returns first element of <paramref name="collection"/> and removes it from the collection
         /// </summary>
-        public static T Shift<T>(this T[] arr) => arr.ToList().Shift();
-        /// <summary>
-        /// Returns first element of <paramref name="List"/> and removes it from the collection
-        /// </summary>
-        public static T Shift<T>(this List<T> List)
+        public static T Shift<T>(this IList<T> collection)
         {
-            T ReturnElement = List[0];
-            List.RemoveAt(0);
+            T ReturnElement = collection[0];
+            collection.RemoveAt(0);
             return ReturnElement;
         }
 
@@ -119,69 +91,89 @@ namespace DanhoLibrary
         /// </summary>
         /// <param name="match">The Predicate<in T> delegate that defines the cinditions of the element to search for.</param>
         /// <returns></returns>
-        public static T Find<T>(this T[] arr, Predicate<T> match) => arr.ToList().Find(match);
+        public static T Find<T>(this IList<T> collection, Predicate<T> match) => collection.ToList().Find(match);
         #endregion
 
         #region Returns string
         /// <summary>
-        /// Returns each element in <paramref name="arr"/> to a string value
+        /// Converets all elements from <paramref name="collection"/> to one long string
         /// </summary>
-        /// <param name="arr">Caller</param>
-        /// <param name="seperator">The seperator string between each element in <paramref name="arr"/></param>
+        public static string Join<T>(this IList<T> collection) => ConsoleItems.ToString(collection.ToArray());
+        /// <summary>
+        /// Returns each element in <paramref name="collection"/> to a string value
+        /// </summary>
+        /// <param name="collection">Caller</param>
+        /// <param name="seperator">The seperator string between each element in <paramref name="collection"/></param>
         /// <returns></returns>
-        public static string Join<T>(this T[] arr, string seperator) => ConsoleItems.ToString(seperator, arr);
-        /// <summary>
-        /// Returns each element in <paramref name="list"/> to string value, seperated by <paramref name="seperator"/>
-        /// </summary>
-        public static string Join<T>(this List<T> list, string seperator) => list.ToArray().Join(seperator);
-        /// <summary>
-        /// Converets all elements from <paramref name="list"/> to one long string
-        /// </summary>
-        public static string Join<T>(this List<T> list) => ConsoleItems.ToString(list.ToArray());
+        public static string Join<T>(this IList<T> collection, string seperator) => ConsoleItems.ToString(seperator, collection);
         #endregion
 
+        #region Returns IList<T>
         /// <summary>
-        /// Goes through <paramref name="arr"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="B"/> array
+        /// Goes through <paramref name="collection"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="EndType"/> array
         /// </summary>
-        /// <typeparam name="A">Start type</typeparam>
-        /// <typeparam name="B">End type</typeparam>
-        /// <param name="arr">Start array</param>
-        /// <param name="callback">Function that should return <typeparamref name="B"/> array</param>
-        /// <returns><paramref name="arr"/> as <typeparamref name="B"/> array</returns>
-        public static B[] Map<A, B>(this A[] arr, Func<A, B> callback)
+        /// <typeparam name="StartType">Start type</typeparam>
+        /// <typeparam name="EndType">End type</typeparam>
+        /// <param name="collection">Start array</param>
+        /// <param name="callback">Function that should return <typeparamref name="EndType"/> array</param>
+        /// <returns><paramref name="collection"/> as <typeparamref name="EndType"/> array</returns>
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, Func<StartType, EndType> callback)
         {
-            B[] newArr = new B[arr.Length];
+            EndType[] newArr = new EndType[collection.Count];
 
-            for (int i = 0; i < arr.Length; i++)
-                newArr[i] = callback(arr[i]);
+            for (int i = 0; i < collection.Count; i++)
+                newArr[i] = callback(collection[i]);
             return newArr;
         }
-        /// <summary>
-        /// Goes through <paramref name="list"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="B"/> List
-        /// </summary>
-        /// <typeparam name="A">Start type</typeparam>
-        /// <typeparam name="B">End type</typeparam>
-        /// <param name="list">Start list</param>
-        /// <param name="callback">Function that should return <typeparamref name="B"/></param>
-        /// <returns><paramref name="list"/> as <typeparamref name="B"/> List</returns>
-        public static List<B> Map<A, B>(this List<A> list, Func<A, B> callback) => list.ToArray().Map(callback).ToList();
+
+        public delegate bool FilterCallback<T>(T value, int index = 0, IList<T> collection = null);
+        public static IList<T> Filter<T>(this IList<T> collection, FilterCallback<T> callback)
+        {
+            IList<T> result = new List<T>();
+
+            foreach (T item in collection)
+                if (callback(item, collection.IndexOf(item), collection))
+                    result.Add(item);
+
+            return result;
+        }
+        #endregion
+
+        public static int IndexOf<T>(this IList<T> collection, T item) => collection.IndexOf(item);
         
         /// <summary>
         /// For each loop as method
         /// </summary>
-        /// <param name="arr">Array to loop through</param>
-        /// <param name="function">Method that each element goes through</param>
-        public static void ForEach<T>(this T[] arr, Action<T> function)
+        /// <param name="collection">Array to loop through</param>
+        /// <param name="callback">Method that each element goes through</param>
+        public static void ForEach<T>(this IList<T> collection, Action<T> callback)
         {
-            foreach (T item in arr)
-                function(item);
+            foreach (T item in collection)
+                callback(item);
         }
-        /// <summary>
-        /// For each loop as method
-        /// </summary>
-        /// <param name="list">List to loop through</param>
-        /// <param name="function">Method that each element goes through</param>
-        public static void ForEach<T>(this List<T> list, Action<T> function) => list.ToArray().ForEach(function);
+
+        #endregion
+
+        #region Dictionary<TKey, TValue>
+        public static List<V> GetValues<K, V>(this Dictionary<K,V> dictionary)
+        {
+            List<V> values = new List<V>();
+            foreach (V value in dictionary.Values)
+                values.Add(value);
+            return values;
+        }
+        public static List<K> GetKeys<K, V>(this Dictionary<K, V> dictionary)
+        {
+            List<K> keys = new List<K>();
+            foreach (K key in dictionary.Keys)
+                keys.Add(key);
+            return keys;
+        }
+        #endregion
+
+        #region KeyValuePair
+        public static string Write<K, V>(this KeyValuePair<K,V> kvp) => $"{kvp.Key}: {kvp.Value}";
+        public static IList<object> ToCollection<K, V>(this KeyValuePair<K, V> kvp) => new object[] { kvp.Key, kvp.Value };
         #endregion
 
         #region string
