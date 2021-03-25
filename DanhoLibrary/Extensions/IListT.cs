@@ -106,6 +106,14 @@ namespace DanhoLibrary.Extensions
             where callback(item, collection.IndexOf(item), collection)
             select item
         ).ToList();
+
+        public static IList<T> AddRange<T>(this IList<T> caller, params IEnumerable<T>[] collection)
+        {
+            List<T> callerAsList = caller.ToList();
+            collection.ForEach(col => callerAsList.AddRange(col));
+            return callerAsList;
+        }
+
         #endregion
 
         /// <summary>
