@@ -181,9 +181,7 @@ namespace DanhoLibrary
         {
             if (!Contains(ImportantItem, out int index) || ImportantItem == null)
                 ImportantItem = StartItem;
-            if (IsPositive)
-                return List[index + 1];
-            return List[index - 1];
+            return List[index + (IsPositive ? 1 : -1)];
         }
         #endregion
 
@@ -191,7 +189,7 @@ namespace DanhoLibrary
         /// <summary> 
         /// Returns List in Array 
         /// </summary>
-        public T[] ToArray() => List;
+        public T[] ToArray() => List.Clone() as T[];
         /// <summary> 
         /// Amount of items in list 
         /// </summary>

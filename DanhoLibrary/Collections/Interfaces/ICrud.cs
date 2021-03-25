@@ -2,6 +2,8 @@
 {
     public interface ICrud<Collection, Item>
     {
+        int ID { get; }
+
         /// <summary>
         /// Creates a new item to collection
         /// </summary>
@@ -13,14 +15,14 @@
         /// </summary>
         /// <param name="id">Identifier to differentiate the <typeparamref name="Item"/>s</param>
         /// <returns>The <typeparamref name="Item"/> matching the <paramref name="id"/></returns>
-        Item Read(string id);
+        Item Read(int id);
         /// <summary>
         /// Update an <typeparamref name="Item"/> matching <paramref name="id"/> with <paramref name="updatedItem"/>
         /// </summary>
         /// <param name="id">Identifier to differentiate the <typeparamref name="Item"/>s</param>
         /// <param name="updatedItem">The updated item</param>
         /// <returns>The updated item</returns>
-        Item Update(string id, Item updatedItem);
+        Item Update(int id, Item updatedItem);
         /// <summary>
         /// Delete the <paramref name="item"/> from <typeparamref name="Collection"/>
         /// </summary>
@@ -32,6 +34,6 @@
         /// </summary>
         /// <param name="id">Identifier to differentiate the <typeparamref name="Item"/>s</param>
         /// <returns>The <typeparamref name="Collection"/> without <paramref name="item"/></returns>
-        Collection Delete(string id);
+        Collection Delete(int id);
     }
 }
