@@ -25,7 +25,7 @@ namespace DanhoLibrary
         public static bool AllTrue(this IList<bool> collection, params int[] indexes)
         {
             for (int x = 0; x < indexes.Length; x++)
-                if (!collection[indexes[x]]) 
+                if (!collection[indexes[x]])
                     return false;
             return true;
         }
@@ -127,20 +127,14 @@ namespace DanhoLibrary
         }
 
         public delegate bool FilterCallback<T>(T value, int index = 0, IList<T> collection = null);
-        public static IList<T> Filter<T>(this IList<T> collection, FilterCallback<T> callback)
-        {
-            IList<T> result = new List<T>();
-
-            foreach (T item in collection)
-                if (callback(item, collection.IndexOf(item), collection))
-                    result.Add(item);
-
-            return result;
-        }
+        public static IList<T> Filter<T>(this IList<T> collection, FilterCallback<T> callback) => 
+        (
+            from T item in collection 
+            where callback(item, collection.IndexOf(item), collection) 
+            select item
+        ).ToList();
         #endregion
 
-        public static int IndexOf<T>(this IList<T> collection, T item) => collection.IndexOf(item);
-        
         /// <summary>
         /// For each loop as method
         /// </summary>
@@ -155,7 +149,7 @@ namespace DanhoLibrary
         #endregion
 
         #region Dictionary<TKey, TValue>
-        public static List<V> GetValues<K, V>(this Dictionary<K,V> dictionary)
+        public static List<V> GetValues<K, V>(this Dictionary<K, V> dictionary)
         {
             List<V> values = new List<V>();
             foreach (V value in dictionary.Values)
@@ -172,7 +166,7 @@ namespace DanhoLibrary
         #endregion
 
         #region KeyValuePair
-        public static string Write<K, V>(this KeyValuePair<K,V> kvp) => $"{kvp.Key}: {kvp.Value}";
+        public static string Write<K, V>(this KeyValuePair<K, V> kvp) => $"{kvp.Key}: {kvp.Value}";
         public static IList<object> ToCollection<K, V>(this KeyValuePair<K, V> kvp) => new object[] { kvp.Key, kvp.Value };
         #endregion
 
