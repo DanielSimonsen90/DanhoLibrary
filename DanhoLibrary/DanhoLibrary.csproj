@@ -10,9 +10,4 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Collections\Interfaces\" />
-    <Folder Include="ORM\" />
-  </ItemGroup>
-
 </Project>

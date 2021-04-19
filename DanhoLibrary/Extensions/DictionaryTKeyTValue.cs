@@ -4,19 +4,15 @@ namespace DanhoLibrary.Extensions
 {
     public static partial class DanhoExtender
     {
-        public static List<V> GetValues<K, V>(this Dictionary<K, V> dictionary)
+        public static IList<KeyValuePair<K, V>> ToArray<K, V>(this Dictionary<K, V> dictionary)
         {
-            List<V> values = new List<V>();
-            foreach (V value in dictionary.Values)
-                values.Add(value);
-            return values;
+            IList<KeyValuePair<K, V>> result = new List<KeyValuePair<K, V>>();
+            foreach (var item in dictionary)
+                result.Add(item);
+            return result;
         }
-        public static List<K> GetKeys<K, V>(this Dictionary<K, V> dictionary)
-        {
-            List<K> keys = new List<K>();
-            foreach (K key in dictionary.Keys)
-                keys.Add(key);
-            return keys;
-        }
+
+        public static IList<V> GetValues<K, V>(this Dictionary<K, V> dictionary) => dictionary.ToArray().Map(kvp => kvp.Value);
+        public static IList<K> GetKeys<K, V>(this Dictionary<K, V> dictionary) => dictionary.ToArray().Map(kvp => kvp.Key);
     }
 }
