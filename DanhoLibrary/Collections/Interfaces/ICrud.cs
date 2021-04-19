@@ -1,9 +1,12 @@
-﻿namespace ConsoleThing
-{
-    public interface ICrud<Collection, Item>
-    {
-        int ID { get; }
+﻿using DanhoLibrary.Collections.Interfaces;
+using System.Collections.Generic;
 
+namespace ConsoleThing
+{
+    public interface ICrud<Collection, Item> 
+        where Collection : IList<Item> 
+        where Item : ICrudItem
+    {
         /// <summary>
         /// Creates a new item to collection
         /// </summary>
@@ -21,7 +24,7 @@
         /// </summary>
         /// <param name="id">Identifier to differentiate the <typeparamref name="Item"/>s</param>
         /// <param name="updatedItem">The updated item</param>
-        /// <returns>The updated item</returns>
+        /// <returns>The old item</returns>
         Item Update(int id, Item updatedItem);
         /// <summary>
         /// Delete the <paramref name="item"/> from <typeparamref name="Collection"/>
