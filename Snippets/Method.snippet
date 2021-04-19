@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Method</Title>
+      <Description>Code snippet for adding a new method</Description>
+      <Author>Daniel Simonsen | Danho</Author>
+      <Shortcut>method</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[$access$ $returnType$ $name$()
+        {
+          $end$
+        }]]>
+      </Code>
+      <Declarations>
+        <Literal>
+          <ID>access</ID>
+          <ToolTip>public | internal | protected | private</ToolTip>
+          <Default>public</Default>
+        </Literal>
+        <Literal>
+          <ID>returnType</ID>
+          <ToolTip>What the method should return</ToolTip>
+          <Default>void</Default>
+        </Literal>
+        <Literal>
+          <ID>name</ID>
+          <ToolTip>Name of the method</ToolTip>
+          <Default>Test</Default>
+        </Literal>
+      </Declarations>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
