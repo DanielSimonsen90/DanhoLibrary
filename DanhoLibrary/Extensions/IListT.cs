@@ -65,6 +65,26 @@ namespace DanhoLibrary.Extensions
         /// <param name="match">The Predicate<in T> delegate that defines the cinditions of the element to search for.</param>
         /// <returns></returns>
         public static T Find<T>(this IList<T> collection, Predicate<T> match) => collection.ToList().Find(match);
+
+        public delegate EndType ReduceCallback<EndType, StartType>(EndType result, StartType current);
+        public static IList<EndType> Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback<IList<EndType>, StartType> callback, IList<EndType> defaultValue)
+        {
+            foreach (var item in collection)
+                defaultValue = callback(defaultValue, item);
+            return defaultValue;
+        }
+        public static string Reduce<StartType>(this IList<StartType> collection, ReduceCallback<string, StartType> callbak, string defaultValue = "")
+        {
+            foreach (var item in collection)
+                defaultValue += callbak(defaultValue, item);
+            return defaultValue;
+        }
+        public static int Reduce<StartType>(this IList<StartType> collection, ReduceCallback<int, StartType> callbak, int defaultValue = 0)
+        {
+            foreach (var item in collection)
+                defaultValue += callbak(defaultValue, item);
+            return defaultValue;
+        }
         #endregion
 
         #region Returns string
