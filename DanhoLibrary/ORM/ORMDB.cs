@@ -40,16 +40,14 @@ namespace DanhoLibrary.ORM
             List<object> result = new List<object>();
             Connect(statement, cmd =>
             {
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using SqlDataReader reader = cmd.ExecuteReader();
+                int i = 0;
+                while (reader.Read())
                 {
-                    int i = 0;
-                    while (reader.Read())
+                    if (reader[i] != null)
                     {
-                        if (reader[i] != null)
-                        {
-                            result.Add(reader[i]);
-                            i++;
-                        }
+                        result.Add(reader[i]);
+                        i++;
                     }
                 }
             });

@@ -35,7 +35,7 @@ namespace DanhoLibrary.ORM
                 sb.Append($", {kvp.Key} {kvp.Value.SQLType} {(kvp.Value.Equals(primaryKey) ? "IDENTITY(1, 1)" : "")}");
             }
 
-            string columns = sb.ToString().Substring(2);
+            string columns = sb.ToString()[2..];
 
             DB.Execute($"CREATE TABLE {TableName} ({columns}, PRIMARY KEY ({pkName}))");
             return this;
@@ -54,7 +54,7 @@ namespace DanhoLibrary.ORM
                 values.Append($", {kvp.Value.GetSQLValue(this)}");
             }
 
-            DB.Execute($"INSERT INTO {TableName} ({fields.ToString().Substring(2)}) VALUES ({values.ToString().Substring(2)})");
+            DB.Execute($"INSERT INTO {TableName} ({fields.ToString()[2..]}) VALUES ({values.ToString()[2..]})");
             return this;
         }
         public ICRUD Select(int primaryKey)
@@ -79,7 +79,7 @@ namespace DanhoLibrary.ORM
                 if (kvp.Value.Equals(primaryKey)) pkName = kvp.Key;
                 else sb.Append($", {kvp.Key} = {kvp.Value.GetSQLValue(this)}");
 
-            DB.Execute($"UPDATE {TableName} SET {sb.ToString().Substring(2)} WHERE {pkName} = {pkValue}");
+            DB.Execute($"UPDATE {TableName} SET {sb.ToString()[2..]} WHERE {pkName} = {pkValue}");
             return this;
         }
         public ICRUD Delete()
