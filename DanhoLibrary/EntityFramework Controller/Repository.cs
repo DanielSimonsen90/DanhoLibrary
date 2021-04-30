@@ -1,8 +1,8 @@
 ﻿namespace DanhoLibrary.EFController
 {
-    public abstract class Controller<Entity> : BaseController<Entity> where Entity : HasID
+    public abstract class Repository<Entity> : BaseRepository<Entity> where Entity : HasID
     {
-        public Controller(DanhoDBContext context) : base(context) { }
+        public Repository(DanhoDBContext context) : base(context) { }
 
         protected int SaveChanges() => _context.SaveChanges();
 

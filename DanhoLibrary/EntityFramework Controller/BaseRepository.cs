@@ -6,10 +6,10 @@ using System.Text;
 
 namespace DanhoLibrary.EFController
 {
-    public abstract class BaseController<Entity> where Entity : HasID
+    public abstract class BaseRepository<Entity> where Entity : HasID
     {
         protected readonly DanhoDBContext _context;
-        public BaseController(DanhoDBContext context) => _context = context;
+        public BaseRepository(DanhoDBContext context) => _context = context;
 
         protected virtual void IfNull(Entity entity)
         {

@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace DanhoLibrary.EFController
 {
-    public abstract class ControllerAsync<Entity> : BaseController<Entity> where Entity : HasID
+    public abstract class RepositoryAsync<Entity> : BaseRepository<Entity> where Entity : HasID
     {
-        public ControllerAsync(DanhoDBContext context) : base(context) { }
+        public RepositoryAsync(DanhoDBContext context) : base(context) { }
 
         protected Task<int> SaveChangesAsync() => _context.SaveChangesAsync();
 
