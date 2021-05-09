@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace DanhoLibrary.Extensions
 {
@@ -67,22 +68,10 @@ namespace DanhoLibrary.Extensions
         public static T Find<T>(this IList<T> collection, Predicate<T> match) => collection.ToList().Find(match);
 
         public delegate EndType ReduceCallback<EndType, StartType>(EndType result, StartType current);
-        public static IList<EndType> Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback<IList<EndType>, StartType> callback, IList<EndType> defaultValue)
+        public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback<EndType, StartType> callback, EndType defaultValue)
         {
             foreach (var item in collection)
                 defaultValue = callback(defaultValue, item);
-            return defaultValue;
-        }
-        public static string Reduce<StartType>(this IList<StartType> collection, ReduceCallback<string, StartType> callbak, string defaultValue = "")
-        {
-            foreach (var item in collection)
-                defaultValue += callbak(defaultValue, item);
-            return defaultValue;
-        }
-        public static int Reduce<StartType>(this IList<StartType> collection, ReduceCallback<int, StartType> callbak, int defaultValue = 0)
-        {
-            foreach (var item in collection)
-                defaultValue += callbak(defaultValue, item);
             return defaultValue;
         }
         #endregion
@@ -91,14 +80,19 @@ namespace DanhoLibrary.Extensions
         /// <summary>
         /// Converets all elements from <paramref name="collection"/> to one long string
         /// </summary>
-        public static string Join<T>(this IList<T> collection) => ConsoleItems.ToString(collection.ToArray());
+        public static string Join<T>(this IList<T> collection) => ConsoleItems.ToString("list", collection);
         /// <summary>
         /// Returns each element in <paramref name="collection"/> to a string value
         /// </summary>
         /// <param name="collection">Caller</param>
         /// <param name="seperator">The seperator string between each element in <paramref name="collection"/></param>
         /// <returns></returns>
-        public static string Join<T>(this IList<T> collection, string seperator) => ConsoleItems.ToString(seperator, collection);
+        public static string Join<T>(this IList<T> collection, string seperator)
+        {
+            StringBuilder sb = new StringBuilder();
+            collection.ForEach(i => sb.Append(i.ToString() + seperator));
+            return sb.ToString();
+        }
         #endregion
 
         #region Returns IList<T>
@@ -133,7 +127,6 @@ namespace DanhoLibrary.Extensions
             collection.ForEach(col => callerAsList.AddRange(col));
             return callerAsList;
         }
-
         #endregion
 
         /// <summary>
