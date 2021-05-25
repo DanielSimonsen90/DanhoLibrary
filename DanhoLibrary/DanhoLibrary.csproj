@@ -3,6 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>annotations</Nullable>
+    <Authors>Daniel Simonsen</Authors>
+    <Company>Simonsen Techs</Company>
+    <Description>Bit of everything really</Description>
   </PropertyGroup>
 
   <ItemGroup>
