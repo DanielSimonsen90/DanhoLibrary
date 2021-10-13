@@ -7,6 +7,16 @@ namespace DanhoLibrary.Extensions
 {
     public static partial class DanhoExtender
     {
+        #region Delegates
+        public delegate void IListCallback<T>(T value);
+        public delegate void IListCallback2<T>(T value, int index);
+        public delegate void IListCallback3<T>(T value, int index, IList<T> collection);
+
+        public delegate R IListCallback<R, T>(T value);
+        public delegate R IListCallback2<R, T>(T value, int index);
+        public delegate R IListCallback3<R, T>(T value, int index, IList<T> collection);
+        #endregion
+
         #region Returns bool
         /// <summary> Tests if this contains all of collection's values </summary>
         /// <param name="collection">collection of strings to test for</param>
@@ -68,10 +78,24 @@ namespace DanhoLibrary.Extensions
         public static T Find<T>(this IList<T> collection, Predicate<T> match) => collection.ToList().Find(match);
 
         public delegate EndType ReduceCallback<EndType, StartType>(EndType result, StartType current);
+        public delegate EndType ReduceCallback2<EndType, StartType>(EndType result, StartType current, int index);
+        public delegate EndType ReduceCallback3<EndType, StartType>(EndType result, StartType current, int index, IList<StartType> self);
         public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback<EndType, StartType> callback, EndType defaultValue)
         {
-            foreach (var item in collection)
-                defaultValue = callback(defaultValue, item);
+            for (int i = 0; i < collection.Count; i++)
+                defaultValue = callback(defaultValue, collection[i]);
+            return defaultValue;
+        }
+        public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback2<EndType, StartType> callback, EndType defaultValue)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                defaultValue = callback(defaultValue, collection[i], i);
+            return defaultValue;
+        }
+        public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback3<EndType, StartType> callback, EndType defaultValue)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                defaultValue = callback(defaultValue, collection[i], i, collection);
             return defaultValue;
         }
         #endregion
@@ -87,15 +111,12 @@ namespace DanhoLibrary.Extensions
         /// <param name="collection">Caller</param>
         /// <param name="seperator">The seperator string between each element in <paramref name="collection"/></param>
         /// <returns></returns>
-        public static string Join<T>(this IList<T> collection, string seperator)
-        {
-            StringBuilder sb = new StringBuilder();
-            collection.ForEach(i => sb.Append(i.ToString() + seperator));
-            return sb.ToString();
-        }
+        public static string Join<T>(this IList<T> collection, string seperator) => collection
+            .Reduce((sb, i) => sb.Append(i.ToString() + seperator), new StringBuilder())
+            .ToString();
         #endregion
 
-        #region Returns IList<T>
+        #region Returns IList<T>      
         /// <summary>
         /// Goes through <paramref name="collection"/> and runs <paramref name="callback"/> for each element and returns the final result as <typeparamref name="EndType"/> array
         /// </summary>
@@ -113,20 +134,30 @@ namespace DanhoLibrary.Extensions
             return newArr;
         }
 
-        public delegate bool FilterCallback<T>(T value, int index = 0, IList<T> collection = null);
-        public static IList<T> Filter<T>(this IList<T> collection, FilterCallback<T> callback) =>
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback<bool, T> callback) =>
+        (
+            from T item in collection
+            where callback(item)
+            select item
+        ).ToList();
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback2<bool, T> callback) =>
+        (
+            from T item in collection
+            where callback(item, collection.IndexOf(item))
+            select item
+        ).ToList();
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback3<bool, T> callback) =>
         (
             from T item in collection
             where callback(item, collection.IndexOf(item), collection)
             select item
         ).ToList();
 
-        public static IList<T> AddRange<T>(this IList<T> caller, params IEnumerable<T>[] collection)
+        public static IList<T> AddRange<T>(this IList<T> caller, params IEnumerable<T>[] collection) => collection.Reduce((caller, col) =>
         {
-            List<T> callerAsList = caller.ToList();
-            collection.ForEach(col => callerAsList.AddRange(col));
-            return callerAsList;
-        }
+            caller.AddRange(col);
+            return caller;
+        }, caller.ToList());
         #endregion
 
         /// <summary>
@@ -134,10 +165,20 @@ namespace DanhoLibrary.Extensions
         /// </summary>
         /// <param name="collection">Array to loop through</param>
         /// <param name="callback">Method that each element goes through</param>
-        public static void ForEach<T>(this IList<T> collection, Action<T> callback)
+        public static void ForEach<T>(this IList<T> collection, IListCallback<T> callback)
         {
             foreach (T item in collection)
                 callback(item);
+        }
+        public static void ForEach<T>(this IList<T> collection, IListCallback2<T> callback)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                callback(collection[i], i);
+        }
+        public static void ForEach<T>(this IList<T> collection, IListCallback3<T> callback)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                callback(collection[i], i, collection);
         }
     }
 }
