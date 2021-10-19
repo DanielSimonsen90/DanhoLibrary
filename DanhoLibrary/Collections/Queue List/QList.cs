@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace DanhoLibrary
+namespace DanhoLibrary.Collections.QueueList
 {
     public class QList<T> : IQueueMethods<T>, IEnumerable
     {
@@ -8,10 +8,10 @@ namespace DanhoLibrary
         public readonly MyList<T> Queue = new MyList<T>(2);
 
         /// <summary> 
-        /// Add <paramref name="Item"/> to queue 
+        /// Add <paramref name="item"/> to queue 
         /// </summary>
-        /// <param name="Item">Item to add to queue</param>
-        public void Enqueue(T Item) => Queue.Add(Item);
+        /// <param name="item">Item to add to queue</param>
+        public void Enqueue(T item) => Queue.Add(item);
         /// <summary> 
         /// Remove 1st item and sorts list 
         /// </summary>
@@ -19,8 +19,8 @@ namespace DanhoLibrary
         /// <summary> 
         /// Removes specified item from queue 
         /// </summary>
-        /// <param name="Item">Item to remove</param>
-        public void Dequeue(T Item) => Queue.Remove(Item);
+        /// <param name="item">Item to remove</param>
+        public void Dequeue(T item) => Queue.Remove(item);
         /// <summary> 
         /// Size of current queue 
         /// </summary>

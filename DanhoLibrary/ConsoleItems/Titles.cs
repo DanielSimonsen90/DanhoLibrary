@@ -21,11 +21,11 @@ namespace DanhoLibrary
         }
         /// <summary> Centers <paramref name="title"/> according to length (must be default window size) </summary>
         /// <param name="title">Title of UI</param>
-        /// <param name="WelcomeMessage">Cute welcome message to welcome user</param>
-        public static void Title(string title, string WelcomeMessage)
+        /// <param name="welcomeMessage">Cute welcome message to welcome user</param>
+        public static void Title(string title, string welcomeMessage)
         {
             Title(title);
-            Console.WriteLine(WelcomeMessage);
+            Console.WriteLine(welcomeMessage);
             Break();
         }
     }

@@ -18,5 +18,19 @@
             string add = i % every == 0 && i != 0 ? toInsert : input[i].ToString();
             return result += add;
         }, string.Empty);
+        /// <summary>
+        /// Regular String.StartsWith, but accepting multiple values
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="strings">The string values that <paramref name="self"/>should start with</param>
+        /// <returns>true if <paramref name="self"/> starts with any of the values in <paramref name="strings"/></returns>
+        public static bool StartsWith(this string self, params string[] strings) => strings.Find(s => self.StartsWith(s)) != null;
+        /// <summary>
+        /// Regular String.EndsWith, but accepting multiple values
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="strings">The string values that <paramref name="self"/>should end with</param>
+        /// <returns>true if <paramref name="self"/> ends with any of the values in <paramref name="strings"/></returns>
+        public static bool EndsWith(this string self, params string[] strings) => strings.Find(s => self.EndsWith(s)) != null;
     }
 }

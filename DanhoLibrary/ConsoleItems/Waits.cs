@@ -5,18 +5,18 @@ namespace DanhoLibrary
 {
     public partial class ConsoleItems
     {
-        /// <summary> Sleep for <paramref name="Time"/> in ms </summary>
-        /// <param name="Time">Time in ms</param>
-        public static void Wait(int Time) => Thread.Sleep(Time); 
+        /// <summary> Sleep for <paramref name="time"/> in ms </summary>
+        /// <param name="time">Time in ms</param>
+        public static void Wait(int time) => Thread.Sleep(time); 
         /// <summary> Waiting... animation </summary>
-        /// <param name="Periods">Amount of periods to spam</param>
-        /// <param name="Time">Waiting time</param>
-        public static void Waiting(int Periods, int Time)
+        /// <param name="periods">Amount of periods to spam</param>
+        /// <param name="time">Waiting time</param>
+        public static void Waiting(int periods, int time)
         {
-            for (int x = 1; x <= Periods; x++)
+            for (int x = 1; x <= periods; x++)
             {
                 Console.Write(".");
-                Wait(Time);
+                Wait(time);
             }
         }
     }

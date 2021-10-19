@@ -32,13 +32,13 @@ namespace DanhoLibrary
         /// </summary>
         private static int Whole = 50;
         private static int InternCapacity { get => GetCapacity(ref ValueOfInternCapacity); }
-        private static int GetCapacity(ref int ValueOfInternCapacity)
+        private static int GetCapacity(ref int valueOfInternCapacity)
         {
-            if (ValueOfInternCapacity is 0) 
+            if (valueOfInternCapacity is 0) 
                 return (optionType != 2) ? 50 : 10;
-            else if (ValueOfInternCapacity == CountItems())
-                return ValueOfInternCapacity = optionType is 1 ? + 50 : optionType is 2 ? + 10 : Whole--;
-            return ValueOfInternCapacity;
+            else if (valueOfInternCapacity == CountItems())
+                return valueOfInternCapacity = optionType is 1 ? + 50 : optionType is 2 ? + 10 : Whole--;
+            return valueOfInternCapacity;
         }
         #endregion
 
@@ -51,32 +51,32 @@ namespace DanhoLibrary
         /// <summary> 
         /// New Array 
         /// </summary>
-        /// <param name="ContainsItems"></param>
+        /// <param name="containsItems"></param>
         /// <returns>true if same items, else no items</returns>
-        private static T[] NewArray(bool ContainsItems)
+        private static T[] NewArray(bool containsItems)
         {
-            if (!ContainsItems) 
+            if (!containsItems) 
                 return new T[InternCapacity];
 
-            T[] TempArr = new T[InternCapacity];
+            T[] result = new T[InternCapacity];
             for (int x = 0; x < List.Length; x++)
-                TempArr[x] = List[x];
+                result[x] = List[x];
 
-            return TempArr;
+            return result;
         }
         
         /// <summary> 
         /// New array not including RemovedItem 
         /// </summary>
-        /// <param name="RemovedItem">Item not to include in new array</param>
+        /// <param name="removedItem">Item not to include in new array</param>
         /// <returns>New array without RemovedItem</returns>
-        private T[] NewArray(T RemovedItem)
+        private T[] NewArray(T removedItem)
         {
-            var TempArr = new T[InternCapacity];
+            var result = new T[InternCapacity];
             for (int x = 0; x < CountItems(); x++)
-                if (!List[x].Equals(RemovedItem))
-                    TempArr[x] = List[x];
-            return TempArr;
+                if (!List[x].Equals(removedItem))
+                    result[x] = List[x];
+            return result;
         }
         #endregion
 
@@ -141,11 +141,11 @@ namespace DanhoLibrary
                 throw new Exception($"{nameof(item)} is not in the list.");
             List = NewArray(List[Index]);
         }
-        public void Remove(int Index)
+        public void Remove(int index)
         {
-            if (Index > CountItems())
-                throw new Exception($"Index {Index} is invalid due to .Count returning {CountItems()}");
-            List = NewArray(List[Index]);
+            if (index > CountItems())
+                throw new Exception($"Index {index} is invalid due to .Count returning {CountItems()}");
+            List = NewArray(List[index]);
         }
         #endregion
 
@@ -175,13 +175,13 @@ namespace DanhoLibrary
         /// <summary> 
         /// Main code used for Next() and Previous() 
         /// </summary>
-        /// <param name="StartItem">Definition of <see cref="ImportantItem"/> if not defined</param>
-        /// <param name="IsPositive">Determines if Index++ or Index--</param>
-        private T PositionHelper(T StartItem, bool IsPositive)
+        /// <param name="startFrom">Definition of <see cref="ImportantItem"/> if not defined</param>
+        /// <param name="isPositive">Determines if Index++ or Index--</param>
+        private T PositionHelper(T startFrom, bool isPositive)
         {
             if (!Contains(ImportantItem, out int index) || ImportantItem == null)
-                ImportantItem = StartItem;
-            return List[index + (IsPositive ? 1 : -1)];
+                ImportantItem = startFrom;
+            return List[index + (isPositive ? 1 : -1)];
         }
         #endregion
 
@@ -235,16 +235,16 @@ namespace DanhoLibrary
         /// Same as Contains(T item), except it outs the Index of the item it looked for 
         /// </summary>
         /// <param name="item">Item to look for</param>
-        /// <param name="Index">Index item is placed in</param>
-        private bool Contains(T item, out int Index)
+        /// <param name="index">Index item is placed in</param>
+        private bool Contains(T item, out int index)
         {
             for (int x = 0; x < List.Length; x++)
                 if (List[x].Equals(item))
                 {
-                    Index = x;
+                    index = x;
                     return true;
                 }
-            Index = -1;
+            index = -1;
             return false;
         }
         #endregion

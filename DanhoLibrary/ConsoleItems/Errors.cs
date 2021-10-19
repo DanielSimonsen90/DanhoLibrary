@@ -4,12 +4,12 @@ namespace DanhoLibrary
 {
     public partial class ConsoleItems
     {
-        /// <summary> Tell people they had an error, via <param name="ErrorMessage"></param> </summary>
-        /// <param name="ErrorMessage">Message to tell User</param>
-        public static void Error(string ErrorMessage)
+        /// <summary> Tell people they had an error, via <param name="message"></param> </summary>
+        /// <param name="message">Message to tell User</param>
+        public static void Error(string message)
         {
             Console.Clear();
-            Console.WriteLine(ErrorMessage);
+            Console.WriteLine(message);
             Break(5);
             Console.WriteLine("Please try again");
             Console.ReadKey();
@@ -20,7 +20,7 @@ namespace DanhoLibrary
         public static void Error() => Error("Your choice failed to be read.");
 
         /// <summary> Tell people they had an error, and what they inserted </summary>
-        /// <param name="Choice"></param>
-        public static void Error(object Choice) => Error($"Your choice \"{Choice}\", failed to be read.");
+        /// <param name="choice"></param>
+        public static void Error(object choice) => Error($"Your choice \"{choice}\", failed to be read.");
     }
 }

@@ -1,7 +1,6 @@
-﻿using DanhoLibrary.Collections.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace ConsoleThing
+namespace DanhoLibrary.Collections.Interfaces
 {
     public interface ICrud<Collection, Item> 
         where Collection : IList<Item> 
