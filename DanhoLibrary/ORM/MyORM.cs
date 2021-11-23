@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Text;
 using static DanhoLibrary.ORM.Types;
 
@@ -70,8 +69,8 @@ namespace DanhoLibrary.ORM
         public ICRUD Update()
         {
             Field primaryKey = primaryKeys[TableName];
-            string pkName = string.Empty;
-            string pkValue = primaryKey.GetSQLValue(this);
+            string pkName = string.Empty, 
+                pkValue = primaryKey.GetSQLValue(this);
 
             StringBuilder sb = new StringBuilder();
 

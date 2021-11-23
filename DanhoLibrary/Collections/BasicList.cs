@@ -13,11 +13,17 @@ namespace DanhoLibrary.Collections
             get => innerList.Find(i => i.ToString() == item);
             set => innerList[innerList.IndexOf(innerList.Find(i => i.ToString() == item))] = value;
         }
+
+        public static BasicList<T> operator +(BasicList<T> self, T item) => self.AddRange(item);
+        public static BasicList<T> operator +(BasicList<T> self, IList<T> items) => self.AddRange(items.ToArray());
+        public static BasicList<T> operator -(BasicList<T> self, T item) => self.RemoveRange(item);
+        public static BasicList<T> operator -(BasicList<T> self, IList<T> items) => self.RemoveRange(items.ToArray());
+
         protected readonly List<T> innerList = new List<T>();
 
         #region Interfaces
 
-        #region ICollection
+        #region ICollection<T>
         public int Count => innerList.Count;
         public bool IsReadOnly => true;
 
@@ -30,7 +36,7 @@ namespace DanhoLibrary.Collections
         IEnumerator IEnumerable.GetEnumerator() => innerList.GetEnumerator();
         #endregion
 
-        #region IList<Channel>
+        #region IList<T>
         public int IndexOf(T item) => innerList.IndexOf(item);
         public void Insert(int index, T item) => innerList.Insert(index, item);
         public void RemoveAt(int index) => innerList.RemoveAt(index);

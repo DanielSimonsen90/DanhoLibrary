@@ -12,9 +12,9 @@ namespace DanhoLibrary.Extensions
         public delegate void IListCallback2<T>(T value, int index);
         public delegate void IListCallback3<T>(T value, int index, IList<T> collection);
 
-        public delegate R IListCallback<R, T>(T value);
-        public delegate R IListCallback2<R, T>(T value, int index);
-        public delegate R IListCallback3<R, T>(T value, int index, IList<T> collection);
+        public delegate R IListCallback<T, R>(T value);
+        public delegate R IListCallback2<T, R>(T value, int index);
+        public delegate R IListCallback3<T, R>(T value, int index, IList<T> collection);
         #endregion
 
         #region Returns bool
@@ -51,6 +51,31 @@ namespace DanhoLibrary.Extensions
                 if (item != null)
                     return false;
             return true;
+        }
+
+        /// <summary> 
+        /// If array contains a true element, it returns true else false 
+        /// </summary>
+        public static bool Some<T>(this IList<T> collection, IListCallback<T, bool> callback)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                if (callback(collection[i]))
+                    return true;
+            return false;
+        }
+        public static bool Some<T>(this IList<T> collection, IListCallback2<T, bool> callback)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                if (callback(collection[i], i))
+                    return true;
+            return false;
+        }
+        public static bool Some<T>(this IList<T> collection, IListCallback3<T, bool> callback)
+        {
+            for (int i = 0; i < collection.Count; i++)
+                if (callback(collection[i], i, collection))
+                    return true;
+            return false;
         }
         #endregion
 
@@ -125,7 +150,7 @@ namespace DanhoLibrary.Extensions
         /// <param name="collection">Start array</param>
         /// <param name="callback">Function that should return <typeparamref name="EndType"/> array</param>
         /// <returns><paramref name="collection"/> as <typeparamref name="EndType"/> array</returns>
-        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, Func<StartType, EndType> callback)
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback<StartType, EndType> callback)
         {
             EndType[] newArr = new EndType[collection.Count];
 
@@ -133,20 +158,36 @@ namespace DanhoLibrary.Extensions
                 newArr[i] = callback(collection[i]);
             return newArr;
         }
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback2<StartType, EndType> callback)
+        {
+            EndType[] newArr = new EndType[collection.Count];
 
-        public static IList<T> Filter<T>(this IList<T> collection, IListCallback<bool, T> callback) =>
+            for (int i = 0; i < collection.Count; i++)
+                newArr[i] = callback(collection[i], i);
+            return newArr;
+        }
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback3<StartType, EndType> callback)
+        {
+            EndType[] newArr = new EndType[collection.Count];
+
+            for (int i = 0; i < collection.Count; i++)
+                newArr[i] = callback(collection[i], i, collection);
+            return newArr;
+        }
+
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback<T, bool> callback) =>
         (
             from T item in collection
             where callback(item)
             select item
         ).ToList();
-        public static IList<T> Filter<T>(this IList<T> collection, IListCallback2<bool, T> callback) =>
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback2<T, bool> callback) =>
         (
             from T item in collection
             where callback(item, collection.IndexOf(item))
             select item
         ).ToList();
-        public static IList<T> Filter<T>(this IList<T> collection, IListCallback3<bool, T> callback) =>
+        public static IList<T> Filter<T>(this IList<T> collection, IListCallback3<T, bool> callback) =>
         (
             from T item in collection
             where callback(item, collection.IndexOf(item), collection)

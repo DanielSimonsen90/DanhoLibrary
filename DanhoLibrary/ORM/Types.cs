@@ -20,10 +20,10 @@ namespace DanhoLibrary.ORM
 
             public override string GetSQLValue(MyORM orm) => GetSQL(orm);
             protected Action<MyORM, float> Setter { get; }
-            public override void SetValue(MyORM orm, string value) => _SetValue(orm, float.Parse(value));
+            public override void SetValue(MyORM orm, string value) => SetValue(orm, float.Parse(value));
 
             private static Func<MyORM, string> Convert(Func<MyORM, float> getter) => orm => getter(orm).ToString();
-            private void _SetValue(MyORM orm, float value) => Setter(orm, value);
+            private void SetValue(MyORM orm, float value) => Setter(orm, value);
 
             public override string SQLType => "FLOAT";
         }
@@ -33,10 +33,10 @@ namespace DanhoLibrary.ORM
 
             public override string GetSQLValue(MyORM orm) => GetSQL(orm);
             protected Action<MyORM, int> Setter { get; }
-            public override void SetValue(MyORM orm, string value) => _SetValue(orm, int.Parse(value));
+            public override void SetValue(MyORM orm, string value) => SetValue(orm, int.Parse(value));
 
             private static Func<MyORM, string> Convert(Func<MyORM, int> getter) => orm => getter(orm).ToString();
-            private void _SetValue(MyORM orm, int value) => Setter(orm, value);
+            private void SetValue(MyORM orm, int value) => Setter(orm, value);
 
             public override string SQLType => "INT";
         }

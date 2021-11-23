@@ -12,11 +12,11 @@ namespace DanhoLibrary.ORM
 
         public ORMDB(string databaseName, string dataSource = "DANIEL-SIMONSEN\\MASTERRUNEUWU")
         {
-            this.Initial_Catalog = databaseName;
-            this.Data_Source = dataSource;
+            Initial_Catalog = databaseName;
+            Data_Source = dataSource;
         }
 
-        private void Connect(string statement, Action<SqlCommand> callback)
+        private T Connect<T>(string statement, Func<SqlCommand, T> callback)
         {
             string connectionString = 
                 $"Data Source={Data_Source};" + 
@@ -25,34 +25,27 @@ namespace DanhoLibrary.ORM
             SqlConnection conn = new SqlConnection(connectionString);
 
             conn.Open();
-            callback(new SqlCommand(statement, conn));
+            T result = callback(new SqlCommand(statement, conn));
             conn.Close();
-        }
-
-        public int Execute(string statement)
-        {
-            int result = -1;
-            Connect(statement, cmd => { result = cmd.ExecuteNonQuery(); });
             return result;
         }
-        public List<object> Query(string statement)
+
+        public int Execute(string statement) => Connect(statement, cmd => cmd.ExecuteNonQuery());
+
+        public List<object> Query(string statement) => Connect(statement, cmd =>
         {
+            using SqlDataReader reader = cmd.ExecuteReader();
             List<object> result = new List<object>();
-            Connect(statement, cmd =>
+            int i = 0;
+            while (reader.Read())
             {
-                using SqlDataReader reader = cmd.ExecuteReader();
-                int i = 0;
-                while (reader.Read())
+                if (reader[i] != null)
                 {
-                    if (reader[i] != null)
-                    {
-                        result.Add(reader[i]);
-                        i++;
-                    }
+                    result.Add(reader[i]);
+                    i++;
                 }
-            });
-
+            }
             return result;
-        }
+        });
     }
 }

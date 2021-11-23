@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DanhoLibrary.Extensions;
+using System;
 
 namespace DanhoLibrary
 {
@@ -12,8 +13,7 @@ namespace DanhoLibrary
         /// <param name="amount">cw's of space</param>
         public static void Break(int amount)
         {
-            for (int x = 0; x < amount; x++)
-                Console.WriteLine();
+            Console.WriteLine(amount.Reduce((str, i) => str += "\n", ""));
         }
     }
 }

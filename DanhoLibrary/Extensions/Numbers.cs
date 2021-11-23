@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using static DanhoLibrary.Extensions.DanhoExtender;
+
+namespace DanhoLibrary.Extensions
+{
+    public static class Numbers
+    {
+        public delegate T IForCallback<T>(int i);
+
+        public static T For<T>(this int length, IForCallback<T> callback)
+        {
+            T result = default;
+         
+            for (int i = 0; i < length; i++)
+            {
+                result = callback(i);
+
+                if (result != null) break;
+            }
+
+            return result;
+        }
+        public static R Reduce<R>(this int length, ReduceCallback<R, int> callback, R defaultValue)
+        {
+            int[] source = new int[length];
+            source.Map((_, i, arr) => i);
+            return source.Reduce((result, i) => callback(result, i), defaultValue);
+        }
+    }
+}
