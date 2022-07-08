@@ -199,6 +199,12 @@ namespace DanhoLibrary.Extensions
             caller.AddRange(col);
             return caller;
         }, caller.ToList());
+
+        public static IList<T> Flat<T>(this IList<T> caller, params IEnumerable<T>[] collection) => collection.Reduce((caller, col) =>
+        {
+            caller.AddRange(col);
+            return caller;
+        }, caller.ToList());
         #endregion
 
         /// <summary>

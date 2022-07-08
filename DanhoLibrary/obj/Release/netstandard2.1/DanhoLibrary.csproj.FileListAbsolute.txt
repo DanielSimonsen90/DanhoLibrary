@@ -25,3 +25,13 @@ C:\Users\DanielSimonsen\source\repos\Library\DanhoLibrary\DanhoLibrary\obj\Relea
 C:\Users\DanielSimonsen\source\repos\Library\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.dll
 C:\Users\DanielSimonsen\source\repos\Library\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.pdb
 C:\Users\DanielSimonsen\source\repos\Library\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.csprojAssemblyReference.cache
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.deps.json
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.dll
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\bin\Release\netstandard2.1\DanhoLibrary.pdb
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.csproj.AssemblyReference.cache
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.AssemblyInfoInputs.cache
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.AssemblyInfo.cs
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.csproj.CoreCompileInputs.cache
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.dll
+C:\Users\dani146d\Documents\GitHub\Libraries\DanhoLibrary\DanhoLibrary\obj\Release\netstandard2.1\DanhoLibrary.pdb
