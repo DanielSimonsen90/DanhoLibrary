@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using static DanhoLibrary.Extensions.DanhoExtender;
+﻿using static DanhoLibrary.Extensions.DanhoExtender;
 
 namespace DanhoLibrary.Extensions
 {
@@ -25,7 +22,8 @@ namespace DanhoLibrary.Extensions
         public static R Reduce<R>(this int length, ReduceCallback<R, int> callback, R defaultValue)
         {
             int[] source = new int[length];
-            source.Map((_, i, arr) => i);
+            for (int i = 0; i < length; i++) source[i] = i;
+
             return source.Reduce((result, i) => callback(result, i), defaultValue);
         }
     }

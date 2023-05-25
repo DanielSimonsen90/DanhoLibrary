@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+#nullable enable
 
 namespace DanhoLibrary.EFController
 {
@@ -9,9 +10,9 @@ namespace DanhoLibrary.EFController
         protected readonly DanhoDBContext _context;
         public BaseRepository(DanhoDBContext context) => _context = context;
 
-        protected virtual void IfNull(Entity entity)
+        protected virtual void IfNull(Entity? entity)
         {
-            if (entity == null) throw new ArgumentNullException($"{nameof(entity)} must not be null");
+            if (entity is null) throw new ArgumentNullException($"{nameof(entity)} must not be null");
         }
 
         /// <summary>
@@ -19,8 +20,8 @@ namespace DanhoLibrary.EFController
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        protected abstract Entity AddIfNull(Entity entity);
-        public virtual Entity Add(Entity entity = null)
+        protected abstract Entity AddIfNull(Entity? entity);
+        public virtual Entity Add(Entity? entity = null)
         {
             entity = AddIfNull(entity);
 
@@ -28,9 +29,11 @@ namespace DanhoLibrary.EFController
             return entity;
         }
 
-        public virtual IList<Entity> GetMultiple(Func<Entity, bool> predicate = null) => predicate != null ? _context.Set<Entity>().Where(predicate).ToList() : _context.Set<Entity>().ToList();
-        public virtual Entity Get(Func<Entity, bool> predicate) => GetMultiple(predicate)?.FirstOrDefault();
-        public virtual Entity Get(int id) => Get(c => c.ID == id);
+        public virtual IList<Entity> GetMultiple(Func<Entity, bool>? predicate = null) => predicate != null 
+            ? _context.Set<Entity>().Where(predicate).ToList() 
+            : _context.Set<Entity>().ToList();
+        public virtual Entity? Get(Func<Entity, bool> predicate) => GetMultiple(predicate)?.FirstOrDefault();
+        public virtual Entity? Get(int id) => Get(c => c.ID == id);
 
         public virtual Entity Update(Entity entity)
         {
@@ -45,6 +48,12 @@ namespace DanhoLibrary.EFController
 
             _context.StateAsDeleted(entity);
         }
-        public virtual void Delete(int id) => Delete(Get(id));
+        public virtual void Delete(int id) 
+        {
+            Entity? entity = Get(id);
+            IfNull(entity);
+
+            Delete(entity!);
+        }
     }
 }

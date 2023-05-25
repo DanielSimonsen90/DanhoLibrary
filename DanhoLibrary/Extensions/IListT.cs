@@ -21,48 +21,24 @@ namespace DanhoLibrary.Extensions
         /// <summary> Tests if this contains all of collection's values </summary>
         /// <param name="collection">collection of strings to test for</param>
         /// <returns>true if all of <paramref name="collection"/> is in this else false</returns>
-        public static bool ContainsAll<T>(this IList<T> arr, params T[] collection)
-        {
-            for (int x = 0; x < collection.Length; x++)
-                if (!arr.Contains(collection[x]))
-                    return false;
-            return true;
-        }
+        public static bool ContainsAll<T>(this IList<T> arr, params T[] collection) => arr.All(x => collection.Contains(x));
 
         /// <summary> Goes through <paramref name="collection"/> and checks if <paramref name="arr"/>.Contains(collectionItem) </summary>
         /// <typeparam name="T">Type</typeparam>
         /// <param name="arr">Original array</param>
         /// <param name="collection">External collection</param>
         /// <returns>True if <paramref name="collection"/> has items in <paramref name="arr"/> else false</returns>
-        public static bool ContainsAny<T>(this IList<T> arr, params T[] collection)
-        {
-            for (int x = 0; x < collection.Length; x++)
-                if (arr.Contains(collection[x]))
-                    return true;
-            return false;
-        }
+        public static bool ContainsAny<T>(this IList<T> arr, params T[] collection) => arr.Any(x => collection.Contains(x));
 
         /// <summary> 
         /// If all items in array are null, true else false 
         /// </summary>
-        public static bool AllNull<T>(this IList<T> arr)
-        {
-            foreach (var item in arr)
-                if (item != null)
-                    return false;
-            return true;
-        }
+        public static bool AllNull<T>(this IList<T> arr) => arr.All(item => item is null);
 
         /// <summary> 
         /// If array contains a true element, it returns true else false 
         /// </summary>
-        public static bool Some<T>(this IList<T> collection, IListCallback<T, bool> callback)
-        {
-            for (int i = 0; i < collection.Count; i++)
-                if (callback(collection[i]))
-                    return true;
-            return false;
-        }
+        public static bool Some<T>(this IList<T> collection, IListCallback<T, bool> callback) => collection.Any(item => callback(item));
         public static bool Some<T>(this IList<T> collection, IListCallback2<T, bool> callback)
         {
             for (int i = 0; i < collection.Count; i++)
@@ -90,9 +66,9 @@ namespace DanhoLibrary.Extensions
         /// </summary>
         public static T Shift<T>(this IList<T> collection)
         {
-            T ReturnElement = collection[0];
+            T shifted = collection[0];
             collection.RemoveAt(0);
-            return ReturnElement;
+            return shifted;
         }
 
         /// <summary>
@@ -107,9 +83,7 @@ namespace DanhoLibrary.Extensions
         public delegate EndType ReduceCallback3<EndType, StartType>(EndType result, StartType current, int index, IList<StartType> self);
         public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback<EndType, StartType> callback, EndType defaultValue)
         {
-            for (int i = 0; i < collection.Count; i++)
-                defaultValue = callback(defaultValue, collection[i]);
-            return defaultValue;
+            return collection.Aggregate(defaultValue, (current, item) => callback(current, item));
         }
         public static EndType Reduce<StartType, EndType>(this IList<StartType> collection, ReduceCallback2<EndType, StartType> callback, EndType defaultValue)
         {
@@ -150,30 +124,9 @@ namespace DanhoLibrary.Extensions
         /// <param name="collection">Start array</param>
         /// <param name="callback">Function that should return <typeparamref name="EndType"/> array</param>
         /// <returns><paramref name="collection"/> as <typeparamref name="EndType"/> array</returns>
-        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback<StartType, EndType> callback)
-        {
-            EndType[] newArr = new EndType[collection.Count];
-
-            for (int i = 0; i < collection.Count; i++)
-                newArr[i] = callback(collection[i]);
-            return newArr;
-        }
-        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback2<StartType, EndType> callback)
-        {
-            EndType[] newArr = new EndType[collection.Count];
-
-            for (int i = 0; i < collection.Count; i++)
-                newArr[i] = callback(collection[i], i);
-            return newArr;
-        }
-        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback3<StartType, EndType> callback)
-        {
-            EndType[] newArr = new EndType[collection.Count];
-
-            for (int i = 0; i < collection.Count; i++)
-                newArr[i] = callback(collection[i], i, collection);
-            return newArr;
-        }
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback<StartType, EndType> callback) => collection.Select(item => callback(item)).ToList();
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback2<StartType, EndType> callback) => collection.Select((item, index) => callback(item, index)).ToList();
+        public static IList<EndType> Map<StartType, EndType>(this IList<StartType> collection, IListCallback3<StartType, EndType> callback) => collection.Select((item, index) => callback(item, index, collection)).ToList();
 
         public static IList<T> Filter<T>(this IList<T> collection, IListCallback<T, bool> callback) =>
         (

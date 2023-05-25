@@ -9,7 +9,7 @@ namespace DanhoLibrary.Collections
         where Collection : IList<Item>
         where Item : ICrudItem
     {
-        protected  Collection InnerCollection { get; set; }
+        protected Collection InnerCollection { get; set; }
 
         public virtual Collection Create(Item item)
         {
