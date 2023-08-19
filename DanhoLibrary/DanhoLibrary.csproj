@@ -1,11 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <Nullable>annotations</Nullable>
+    <Nullable>enable</Nullable>
     <Authors>Daniel Simonsen</Authors>
-    <Company>Simonsen Techs</Company>
+    <Company></Company>
     <Description>Bit of everything really</Description>
+    <Copyright>Daniel Simonsen</Copyright>
+    <LangVersion>10.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
