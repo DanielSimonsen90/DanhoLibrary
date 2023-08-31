@@ -8,6 +8,6 @@ namespace DanhoLibrary.NLayer
         /// <summary>
         /// The Id of the entity.
         /// </summary>
-        public abstract TId Id { get; set; }
+        public TId Id { get; set; }
     }
 }
