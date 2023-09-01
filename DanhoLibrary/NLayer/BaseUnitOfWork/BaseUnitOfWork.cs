@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DanhoLibrary.NLayer;
 
-internal class BaseUnitOfWork<TDbContext> : IBaseUnitOfWork, IDisposable
+public class BaseUnitOfWork<TDbContext> : IBaseUnitOfWork, IDisposable
     where TDbContext : DbContext
 {
     /// <param name="context">ApplicationDbContext</param>
