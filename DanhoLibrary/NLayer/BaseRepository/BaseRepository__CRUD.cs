@@ -29,6 +29,9 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
     #region GetAll
     public virtual IEnumerable<TEntity> GetAll() => _dbSet.ToList() ?? new List<TEntity>();
     public virtual IEnumerable<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate) => _dbSet.Where(predicate).ToList();
+    public virtual IEnumerable<TEntity> GetAllWithRelations(params Expression<Func<TEntity, object?>>[] includeProperties) => includeProperties
+        .Aggregate(_dbSet.AsQueryable(), (current, includeProperty) => current.Include(includeProperty))
+        .ToList();
     #endregion
 
     #region Get
@@ -42,8 +45,7 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
         return entity;
     }
     public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) => _dbSet.FirstOrDefault(predicate);
-    public virtual TEntity GetWithRelations(TId? id, params Expression<Func<TEntity, object?>>[] relations) => relations
-        .Aggregate(_dbSet.AsQueryable(), (query, relation) => query.Include(relation))
+    public virtual TEntity GetWithRelations(TId? id, params Expression<Func<TEntity, object?>>[] relations) => GetAllWithRelations(relations)
         .FirstOrDefault(e => e.Id!.Equals(id));
     public virtual async Task<TEntity> GetAsync(TId? id)
     {
