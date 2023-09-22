@@ -8,21 +8,28 @@ using Microsoft.EntityFrameworkCore;
 
 using DanhoLibrary.Extensions;
 using DanhoLibrary.NLayer.BaseRepository.Interfaces;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace DanhoLibrary.NLayer;
 public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CRUD<TEntity, TId>
     where TEntity : BaseEntity<TId>
 {
     #region Add
-    public virtual void Add(TEntity entity)
+    public virtual TEntity Add(TEntity entity)
     {
         if (entity is null) throw new ArgumentNullException(nameof(entity));
-        _dbSet.Add(entity);
+        if (Exists(entity.Id)) throw new ArgumentException($"Entity with id {entity.Id} already exists.");
+        
+        EntityEntry<TEntity> entry = _dbSet.Add(entity);
+        return entry.Entity;
     }
-    public virtual async Task AddAsync(TEntity entity)
+    public virtual async Task<TEntity> AddAsync(TEntity entity)
     {
         if (entity is null) throw new ArgumentNullException(nameof(entity));
-        await _dbSet.AddAsync(entity);
+        if (Exists(entity.Id)) throw new ArgumentException($"Entity with id {entity.Id} already exists.");
+
+        EntityEntry<TEntity> entry = await _dbSet.AddAsync(entity);
+        return entry.Entity;
     }
     #endregion
 

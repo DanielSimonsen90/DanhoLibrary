@@ -1,5 +1,6 @@
 ﻿using DanhoLibrary.NLayer.BaseRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace DanhoLibrary.NLayer;
 
@@ -17,7 +18,17 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository<TEn
         _dbSet = context.Set<TEntity>();
     }
 
-    public bool Exists(TId? id) => Get(id) is not null;
+    public bool Exists(TId? id)
+    {
+        try
+        {
+            return Get(id) is not null;
+        }
+        catch (ArgumentNullException)
+        {
+            return false;
+        }
+    }
     public bool Exists(TEntity? entity) => entity is not null && Exists(entity.Id);
 
     protected EntityNotFoundException<TEntity, TId> EntityNotFound(TEntity? entity) => new(nameof(entity), entity);

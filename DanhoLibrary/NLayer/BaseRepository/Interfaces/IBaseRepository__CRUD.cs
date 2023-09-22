@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -14,8 +15,8 @@ internal interface IBaseRepository__CRUD<TEntity, TId>
     /// <param name="entity">Entity to add.</param>
     /// <returns>True if sucessful.</returns>
     /// <exception cref="ArgumentNullException">If <paramref name="entity"/> is null</exception>
-    void Add(TEntity entity);
-    Task AddAsync(TEntity entity);
+    TEntity Add(TEntity entity);
+    Task<TEntity> AddAsync(TEntity entity);
 
     /// <summary>
     /// Get all entities from database.
