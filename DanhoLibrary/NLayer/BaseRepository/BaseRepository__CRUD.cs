@@ -19,7 +19,7 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
     {
         if (entity is null) throw new ArgumentNullException(nameof(entity));
         if (Exists(entity.Id)) throw new ArgumentException($"Entity with id {entity.Id} already exists.");
-        
+
         EntityEntry<TEntity> entry = _dbSet.Add(entity);
         return entry.Entity;
     }
@@ -31,6 +31,13 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
         EntityEntry<TEntity> entry = await _dbSet.AddAsync(entity);
         return entry.Entity;
     }
+    #endregion
+
+    #region AddRange
+    public virtual IEnumerable<TEntity> AddRange(params TEntity[] entities) => entities.Select(Add).ToArray();
+    public virtual Task<IEnumerable<TEntity>> AddRangeAsync(params TEntity[] entities) => Task.WhenAll(entities.Select(AddAsync)) 
+        as Task<IEnumerable<TEntity>> 
+        ?? throw new NullReferenceException();
     #endregion
 
     #region GetAll
@@ -48,7 +55,7 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
 
         TEntity? entity = _dbSet.Find(id);
         if (entity is null) throw EntityNotFound(entity);
-        
+
         return entity;
     }
     public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) => _dbSet.FirstOrDefault(predicate);
@@ -97,7 +104,7 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
     {
         if (entity is null) throw new ArgumentNullException(nameof(entity));
         if (!Exists(entity)) throw EntityNotFound(entity);
-        
+
         _dbSet.Update(entity);
     }
     #endregion

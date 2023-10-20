@@ -18,6 +18,9 @@ internal interface IBaseRepository__CRUD<TEntity, TId>
     TEntity Add(TEntity entity);
     Task<TEntity> AddAsync(TEntity entity);
 
+    IEnumerable<TEntity> AddRange(params TEntity[] entities);
+    Task<IEnumerable<TEntity>> AddRangeAsync(params TEntity[] entities);
+
     /// <summary>
     /// Get all entities from database.
     /// </summary>
