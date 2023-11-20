@@ -24,4 +24,5 @@ public class BaseUnitOfWork<TDbContext> : IBaseUnitOfWork, IDisposable
 
     public int SaveChanges() => Context.SaveChanges();
     public Task<int> SaveChangesAsync() => Context.SaveChangesAsync();
+    public void ClearTracking() => Context.ChangeTracker.Clear();
 }

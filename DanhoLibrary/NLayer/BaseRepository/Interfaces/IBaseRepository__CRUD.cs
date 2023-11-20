@@ -63,6 +63,13 @@ internal interface IBaseRepository__CRUD<TEntity, TId>
     /// <returns>The entity</returns>
     /// <exception cref="EntityNotFoundException{TEntity, TId}">If entity wasn't found</exception>
     Task<TEntity> GetAsync(TId? id);
+    /// <summary>
+    /// Get <see cref="TEntity"/> without EntityFramework tracking it.
+    /// </summary>
+    /// <param name="id">Id of the entity</param>
+    /// <returns>The entity</returns>
+    /// <exception cref="EntityNotFoundException{TEntity, TId}">If entity wasn't found</exception>
+    TEntity GetAsNoTracking(TId? id);
 
     /// <summary>
     /// Get the entity from database, but don't return it. Not sure when you would use this, but it's here

@@ -61,6 +61,8 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
     public virtual TEntity Get(Expression<Func<TEntity, bool>> predicate) => _dbSet.FirstOrDefault(predicate);
     public virtual TEntity GetWithRelations(TId? id, params Expression<Func<TEntity, object?>>[] relations) => GetAllWithRelations(relations)
         .FirstOrDefault(e => e.Id!.Equals(id));
+    public virtual TEntity GetWithRelations(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object?>>[] relations) => 
+        GetAllWithRelations(relations).FirstOrDefault(predicate);
     public virtual async Task<TEntity> GetAsync(TId? id)
     {
         if (IsIdInvalid(id)) throw new ArgumentException(nameof(id));
@@ -70,6 +72,16 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository__CR
 
         return entity;
     }
+    public virtual TEntity GetAsNoTracking(TId? id)
+    {
+        if (IsIdInvalid(id)) throw new ArgumentException(nameof(id));
+
+        TEntity? entity = _dbSet.AsNoTracking().FirstOrDefault(e => e.Id!.Equals(id));
+        if (entity is null) throw EntityNotFound(entity);
+
+        return entity;
+    }
+    
     protected virtual bool IsIdInvalid(TId? id)
     {
         bool idIsNullOrDefault = id is null || id.Equals(default(TId));

@@ -16,4 +16,6 @@ internal partial interface IBaseRepository<TEntity, TId>
     /// <param name="entity">Entity to check if exists in database.</param>
     /// <returns>True if entity exists in database</returns>
     public bool Exists(TEntity? entity);
+
+    public void Detatch(TEntity entity);
 }

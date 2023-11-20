@@ -12,9 +12,11 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository<TEn
     /// This is used to easily handle CRUD operations without needing to know the exact entity from DbContext
     /// </summary>
     protected readonly DbSet<TEntity> _dbSet;
+    protected readonly DbContext _context;
 
     public BaseRepository(DbContext context)
     {
+        _context = context;
         _dbSet = context.Set<TEntity>();
     }
 
@@ -24,12 +26,14 @@ public abstract partial class BaseRepository<TEntity, TId> : IBaseRepository<TEn
         {
             return Get(id) is not null;
         }
-        catch (ArgumentNullException)
+        catch (Exception) // ArgumentNullException or EntityNotFoundException
         {
             return false;
         }
     }
     public bool Exists(TEntity? entity) => entity is not null && Exists(entity.Id);
+
+    public void Detatch(TEntity entity) => _context.Entry(entity).State = EntityState.Detached;
 
     protected EntityNotFoundException<TEntity, TId> EntityNotFound(TEntity? entity) => new(nameof(entity), entity);
 }
